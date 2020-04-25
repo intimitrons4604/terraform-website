@@ -1,0 +1,2 @@
+subdomain = "next"
+environment = "development"
