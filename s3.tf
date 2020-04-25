@@ -1,4 +1,5 @@
 resource "aws_s3_bucket" "web_bucket" {
+  bucket = "trons-website-web-${var.subdomain}"
   website {
     index_document = "index.html"
     error_document = "404.html"
@@ -6,6 +7,11 @@ resource "aws_s3_bucket" "web_bucket" {
   lifecycle_rule {
     enabled                                = true
     abort_incomplete_multipart_upload_days = 1
+  }
+  tags = {
+    "trons:environment" = var.environment
+    "trons:service"     = "website"
+    "trons:terraform"   = "true"
   }
 }
 
