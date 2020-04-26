@@ -1,10 +1,11 @@
 resource "aws_cloudfront_distribution" "web_distribution" {
   enabled = true
-  comment = "${var.subdomain}.intimitrons.ca"
 
   is_ipv6_enabled = true
   http_version    = "http2"
   price_class     = "PriceClass_100"
+
+  aliases = ["${var.subdomain}.intimitrons.ca."]
 
   viewer_certificate {
     cloudfront_default_certificate = true
