@@ -8,7 +8,9 @@ resource "aws_cloudfront_distribution" "web_distribution" {
   aliases = ["${var.subdomain}.intimitrons.ca."]
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn      = aws_acm_certificate.website_primary_certificate.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2018"
   }
 
   restrictions {
@@ -37,7 +39,7 @@ resource "aws_cloudfront_distribution" "web_distribution" {
   default_cache_behavior {
     target_origin_id = "default"
 
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
 
@@ -61,4 +63,6 @@ resource "aws_cloudfront_distribution" "web_distribution" {
     "trons:service"     = "website"
     "trons:terraform"   = "true"
   }
+
+  depends_on = [aws_acm_certificate_validation.website_primary_certificate_validation]
 }
