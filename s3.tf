@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "web_bucket" {
-  bucket = "trons-website-web-${var.subdomain}"
+  // The HTTPS certificate will not match bucket names with periods when using the virtual-hosted–style URI
+  bucket = "trons-website-web-${replace(var.subdomain, ".", "-")}"
   website {
     index_document = "index.html"
     error_document = "404.html"
