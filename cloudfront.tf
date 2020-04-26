@@ -5,7 +5,7 @@ resource "aws_cloudfront_distribution" "web_distribution" {
   http_version    = "http2"
   price_class     = "PriceClass_100"
 
-  aliases = ["${var.subdomain}.intimitrons.ca."]
+  aliases = ["${var.subdomain}.intimitrons.ca"]
 
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.website_primary_certificate.arn
