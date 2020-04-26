@@ -3,6 +3,12 @@ resource "aws_acm_certificate" "website_primary_certificate" {
 
   domain_name       = "${var.subdomain}.intimitrons.ca"
   validation_method = "DNS"
+
+  tags = {
+    "trons:environment" = var.environment
+    "trons:service"     = "website"
+    "trons:terraform"   = "true"
+  }
 }
 
 resource "aws_route53_record" "website_primary_certificate_dns_validation" {
