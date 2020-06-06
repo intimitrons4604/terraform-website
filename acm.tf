@@ -1,7 +1,7 @@
 resource "aws_acm_certificate" "website_primary_certificate" {
   provider = aws.us-east-1
 
-  domain_name       = "${var.subdomain}.intimitrons.ca"
+  domain_name       = "${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
   validation_method = "DNS"
 
   tags = {
