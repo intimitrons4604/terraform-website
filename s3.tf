@@ -46,8 +46,9 @@ resource "aws_s3_bucket_policy" "web_bucket_policy" {
 }
 
 resource "aws_s3_bucket" "redirect_bucket" {
+  // The bucket name must exactly match the DNS name
   // The HTTPS certificate will not match bucket names with periods when using the virtual-hosted–style URI (e.g. bucket.s3.amazonaws.com)
-  bucket = "trons-website-redirect-${replace(var.subdomain, ".", "-")}"
+  bucket = "www.${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
   website {
     redirect_all_requests_to = "https://${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
   }
