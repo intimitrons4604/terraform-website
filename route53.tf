@@ -14,3 +14,15 @@ resource "aws_route53_record" "website_primary" {
     evaluate_target_health = false
   }
 }
+
+resource "aws_route53_record" "website_redirect" {
+  zone_id = data.terraform_remote_state.dns.outputs.zone_id
+  name    = "www.${var.subdomain}"
+  type    = "A"
+
+  alias {
+    name                   = aws_s3_bucket.redirect_bucket.website_domain
+    zone_id                = aws_s3_bucket.redirect_bucket.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
