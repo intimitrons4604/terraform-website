@@ -58,6 +58,11 @@ resource "aws_cloudfront_distribution" "web_distribution" {
     }
   }
 
+  logging_config {
+    bucket = aws_s3_bucket.log_bucket.bucket_regional_domain_name
+    prefix = "cloudFront/"
+  }
+
   tags = {
     "trons:environment" = var.environment
     "trons:service"     = "website"
