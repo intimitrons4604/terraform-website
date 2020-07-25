@@ -12,8 +12,6 @@ data "aws_iam_policy_document" "deploy_policy" {
   statement {
     effect = "Allow"
     actions = [
-      // gatsby-plugin-s3 makes a GetBucketLocation call to get the bucket region and check the bucket exists
-      "s3:GetBucketLocation",
       "s3:ListBucket",
     ]
     resources = [aws_s3_bucket.web_bucket.arn]
