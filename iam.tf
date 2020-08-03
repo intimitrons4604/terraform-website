@@ -12,6 +12,15 @@ data "aws_iam_policy_document" "deploy_policy" {
   statement {
     effect = "Allow"
     actions = [
+      "dynamodb:DeleteItem",
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+    ]
+    resources = [aws_dynamodb_table.lock_table.arn]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
       "s3:ListBucket",
     ]
     resources = [aws_s3_bucket.web_bucket.arn]
