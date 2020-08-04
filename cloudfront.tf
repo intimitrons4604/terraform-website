@@ -43,7 +43,7 @@ resource "aws_cloudfront_distribution" "web_distribution" {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
 
-    compress         = false
+    compress         = true
     smooth_streaming = false
 
     default_ttl = 86400
