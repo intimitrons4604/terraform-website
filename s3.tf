@@ -21,6 +21,7 @@ resource "aws_s3_bucket" "web_bucket" {
     "trons:environment" = var.environment
     "trons:service"     = "website"
     "trons:terraform"   = "true"
+    "tf-test"           = "tf-test"
   }
 }
 
