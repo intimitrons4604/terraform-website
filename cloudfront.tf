@@ -46,7 +46,7 @@ resource "aws_cloudfront_distribution" "web_distribution" {
     compress         = false
     smooth_streaming = false
 
-    default_ttl = 60
+    default_ttl = 86400
     min_ttl     = 0
     max_ttl     = 31536000
 
