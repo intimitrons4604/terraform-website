@@ -10,6 +10,12 @@ resource "aws_s3_bucket" "web_bucket" {
   lifecycle_rule {
     enabled                                = true
     abort_incomplete_multipart_upload_days = 1
+
+    // This is here to work around a bug in the AWS provider
+    expiration {
+      expired_object_delete_marker = false
+      days                         = 0
+    }
   }
 
   logging {
@@ -21,7 +27,6 @@ resource "aws_s3_bucket" "web_bucket" {
     "trons:environment" = var.environment
     "trons:service"     = "website"
     "trons:terraform"   = "true"
-    "tf-test"           = "tf-test"
   }
 }
 
@@ -110,6 +115,12 @@ resource "aws_s3_bucket" "log_bucket" {
   lifecycle_rule {
     enabled                                = true
     abort_incomplete_multipart_upload_days = 1
+
+    // This is here to work around a bug in the AWS provider
+    expiration {
+      expired_object_delete_marker = false
+      days                         = 0
+    }
   }
 
   tags = {
