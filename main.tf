@@ -1,12 +1,12 @@
 provider "aws" {
-  version = "2.65.0"
+  version = "~> 3.0"
   region  = "us-west-2"
 }
 
 provider "aws" {
   alias = "us-east-1"
 
-  version = "~> 2.0"
+  version = "~> 3.0"
   region  = "us-east-1"
 }
 
@@ -16,7 +16,7 @@ data "terraform_remote_state" "dns" {
     hostname     = "app.terraform.io"
     organization = "intimitrons"
     workspaces = {
-      name = "dns"
+      name = "dns-prod"
     }
   }
 }
