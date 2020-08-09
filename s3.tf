@@ -103,7 +103,6 @@ resource "aws_s3_bucket_policy" "redirect_bucket_policy" {
 resource "aws_s3_bucket" "log_bucket" {
   // The HTTPS certificate will not match bucket names with periods when using the virtual-hosted–style URI (e.g. bucket.s3.amazonaws.com)
   bucket = "trons-website-log-${replace(var.subdomain, ".", "-")}"
-  acl    = "log-delivery-write"
 
   server_side_encryption_configuration {
     rule {
@@ -111,6 +110,19 @@ resource "aws_s3_bucket" "log_bucket" {
         sse_algorithm = "AES256"
       }
     }
+  }
+
+  grant {
+    type        = "Group"
+    uri         = "http://acs.amazonaws.com/groups/s3/LogDelivery"
+    permissions = ["WRITE", "READ_ACP"]
+  }
+
+  // CloudFront access logging
+  grant {
+    type        = "CanonicalUser"
+    id          = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
+    permissions = ["FULL_CONTROL"]
   }
 
   lifecycle_rule {
