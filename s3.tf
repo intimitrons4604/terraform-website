@@ -11,7 +11,8 @@ resource "aws_s3_bucket" "web_bucket" {
     enabled                                = true
     abort_incomplete_multipart_upload_days = 1
 
-    // This is here to work around a bug in the AWS provider
+    // This is a workaround and NOP
+    // See https://github.com/intimitrons4604/terraform-website/issues/40
     expiration {
       expired_object_delete_marker = false
       days                         = 0
@@ -116,7 +117,8 @@ resource "aws_s3_bucket" "log_bucket" {
     enabled                                = true
     abort_incomplete_multipart_upload_days = 1
 
-    // This is here to work around a bug in the AWS provider
+    // This is a workaround and NOP
+    // See https://github.com/intimitrons4604/terraform-website/issues/40
     expiration {
       expired_object_delete_marker = false
       days                         = 0
