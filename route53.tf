@@ -5,7 +5,7 @@ resource "aws_route53_record" "website_primary" {
   }
 
   zone_id = data.terraform_remote_state.dns.outputs.zone_id
-  name    = var.subdomain
+  name    = "www.${var.subdomain}"
   type    = each.value
 
   alias {
@@ -17,7 +17,7 @@ resource "aws_route53_record" "website_primary" {
 
 resource "aws_route53_record" "website_redirect" {
   zone_id = data.terraform_remote_state.dns.outputs.zone_id
-  name    = "www.${var.subdomain}"
+  name    = var.subdomain
   type    = "A"
 
   alias {
