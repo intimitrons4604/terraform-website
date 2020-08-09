@@ -1,6 +1,10 @@
 resource "aws_acm_certificate" "website_primary_certificate" {
   provider = aws.us-east-1
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   domain_name       = "www.${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
   validation_method = "DNS"
 
