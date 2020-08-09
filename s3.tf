@@ -66,7 +66,7 @@ resource "aws_s3_bucket" "redirect_bucket" {
   bucket = "www.${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
 
   website {
-    redirect_all_requests_to = "https://${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
+    redirect_all_requests_to = "https://www.${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
   }
 
   logging {
