@@ -1,2 +1,0 @@
-subdomain   = "next"
-environment = "development"
