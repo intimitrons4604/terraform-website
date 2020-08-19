@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "website_primary_certificate" {
-  provider = aws.us-east-1
+  provider = aws.us_east_1
 
   lifecycle {
     create_before_destroy = true
@@ -32,7 +32,7 @@ resource "aws_route53_record" "website_primary_certificate_dns_validation" {
 }
 
 resource "aws_acm_certificate_validation" "website_primary_certificate_validation" {
-  provider = aws.us-east-1
+  provider = aws.us_east_1
 
   certificate_arn         = aws_acm_certificate.website_primary_certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.website_primary_certificate_dns_validation : record.fqdn]

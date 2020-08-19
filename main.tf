@@ -1,13 +1,11 @@
 provider "aws" {
-  version = "~> 3.0"
-  region  = "us-west-2"
+  region = "us-west-2"
 }
 
 provider "aws" {
-  alias = "us-east-1"
+  alias = "us_east_1"
 
-  version = "~> 3.0"
-  region  = "us-east-1"
+  region = "us-east-1"
 }
 
 data "terraform_remote_state" "dns" {
