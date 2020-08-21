@@ -1,6 +1,7 @@
 resource "aws_s3_bucket" "web_bucket" {
-  // The HTTPS certificate will not match bucket names with periods when using the virtual-hosted–style URI (e.g. bucket.s3.amazonaws.com)
-  bucket = "trons-website-web-${replace(var.subdomain, ".", "-")}"
+  // The HTTPS certificate will not match bucket names with periods when using the virtual-hosted–style URI
+  // (e.g. bucket.s3.amazonaws.com) so replace them
+  bucket = join("-", compact(["trons-website-web", replace(var.subdomain, ".", "-")]))
 
   website {
     index_document = "index.html"
@@ -61,12 +62,11 @@ resource "aws_s3_bucket_policy" "web_bucket_policy" {
 }
 
 resource "aws_s3_bucket" "redirect_bucket" {
-  // The bucket name must exactly match the DNS name
-  // The HTTPS certificate will not match bucket names with periods when using the virtual-hosted–style URI (e.g. bucket.s3.amazonaws.com)
-  bucket = "${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
+  // The bucket name must exactly match the DNS name for static web hosting
+  bucket = join(".", compact([var.subdomain, trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")]))
 
   website {
-    redirect_all_requests_to = "https://www.${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
+    redirect_all_requests_to = join(".", compact(["https://www", var.subdomain, trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")]))
   }
 
   logging {
@@ -101,8 +101,9 @@ resource "aws_s3_bucket_policy" "redirect_bucket_policy" {
 }
 
 resource "aws_s3_bucket" "log_bucket" {
-  // The HTTPS certificate will not match bucket names with periods when using the virtual-hosted–style URI (e.g. bucket.s3.amazonaws.com)
-  bucket = "trons-website-log-${replace(var.subdomain, ".", "-")}"
+  // The HTTPS certificate will not match bucket names with periods when using the virtual-hosted–style URI
+  // (e.g. bucket.s3.amazonaws.com) so replace them
+  bucket = join("-", compact(["trons-website-log", replace(var.subdomain, ".", "-")]))
 
   server_side_encryption_configuration {
     rule {

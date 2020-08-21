@@ -1,5 +1,5 @@
 resource "aws_iam_user" "deploy_user" {
-  name = "svc_website-deploy-${var.subdomain}"
+  name = join("-", compact(["svc_website-deploy", var.subdomain]))
   tags = {
     "trons:environment" = var.environment
     "trons:service"     = "website"
@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "deploy_policy" {
 }
 
 resource "aws_iam_policy" "deploy_policy" {
-  name   = "svc_website-deploy-${var.subdomain}"
+  name   = join("-", compact(["svc_website-deploy", var.subdomain]))
   policy = data.aws_iam_policy_document.deploy_policy.json
 }
 

@@ -5,7 +5,7 @@ resource "aws_acm_certificate" "website_primary_certificate" {
     create_before_destroy = true
   }
 
-  domain_name       = "www.${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"
+  domain_name       = join(".", compact(["www", var.subdomain, trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")]))
   validation_method = "DNS"
 
   tags = {

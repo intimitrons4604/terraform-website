@@ -5,7 +5,7 @@ resource "aws_cloudfront_distribution" "web_distribution" {
   http_version    = "http2"
   price_class     = "PriceClass_100"
 
-  aliases = ["www.${var.subdomain}.${trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")}"]
+  aliases = [join(".", compact(["www", var.subdomain, trimsuffix(data.terraform_remote_state.dns.outputs.fqdn, ".")]))]
 
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.website_primary_certificate.arn
