@@ -5,7 +5,7 @@ resource "aws_route53_record" "website_primary" {
   } : {}
 
   zone_id = data.terraform_remote_state.dns.outputs.zone_id
-  name    = "www.${var.subdomain}"
+  name    = join(".", compact(["www", var.subdomain]))
   type    = each.value
 
   allow_overwrite = var.allow_dns_overwrite

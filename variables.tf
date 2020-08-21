@@ -1,6 +1,6 @@
 variable "subdomain" {
   type        = string
-  description = "The subdomain the website is available at"
+  description = "The subdomain the website is available at, may be empty"
 }
 
 variable "environment" {

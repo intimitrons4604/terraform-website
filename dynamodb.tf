@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "lock_table" {
-  name = "trons-website-lock-${var.subdomain}"
+  name = join("-", compact(["trons-website-lock", var.subdomain]))
 
   // Only provisioned tables are included in the free tier
   billing_mode   = "PROVISIONED"
