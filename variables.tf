@@ -17,5 +17,5 @@ variable "manage_dns" {
 variable "allow_dns_overwrite" {
   type        = bool
   description = "True to allow existing DNS records to be overwritten, false otherwise (default)"
-  default     = true
+  default     = false
 }
