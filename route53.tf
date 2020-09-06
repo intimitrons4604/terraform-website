@@ -1,14 +1,12 @@
 resource "aws_route53_record" "website_primary" {
-  for_each = var.manage_dns ? {
+  for_each = {
     v4 = "A"
     v6 = "AAAA"
-  } : {}
+  }
 
   zone_id = data.terraform_remote_state.dns.outputs.zone_id
   name    = join(".", compact(["www", var.subdomain]))
   type    = each.value
-
-  allow_overwrite = var.allow_dns_overwrite
 
   alias {
     name                   = aws_cloudfront_distribution.web_distribution.domain_name
@@ -18,13 +16,9 @@ resource "aws_route53_record" "website_primary" {
 }
 
 resource "aws_route53_record" "website_redirect" {
-  count = var.manage_dns ? 1 : 0
-
   zone_id = data.terraform_remote_state.dns.outputs.zone_id
   name    = var.subdomain
   type    = "A"
-
-  allow_overwrite = var.allow_dns_overwrite
 
   alias {
     name                   = aws_s3_bucket.redirect_bucket.website_domain
